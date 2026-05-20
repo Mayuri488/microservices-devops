@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,6 +35,9 @@ public class ProductDto {
     @Min(value = 0, message = "discount must be greater than or equal to 0")
     @Max(value = 100, message = "discount must be less than or equal to 100")
     private Integer discount;
+
+    private Instant createdAt;
+    private Instant updatedAt;
 
     private Boolean live;
     private List<String> productImages;
