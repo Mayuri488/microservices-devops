@@ -1,0 +1,91 @@
+package com.cts.easybuy.inventory.web;
+
+import com.substring.easybuy.inventory.dto.*;
+import com.substring.easybuy.inventory.service.InventoryService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
+
+@RestController
+@Validated
+@RequestMapping("/api/inventories")
+public class InventoryController {
+
+	private final InventoryService service;
+
+	public InventoryController(InventoryService service) {
+		this.service = service;
+	}
+
+	@PostMapping
+	public ResponseEntity<InventoryResponse> create(@Valid @RequestBody CreateInventoryRequest request) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(service.create(request));
+	}
+
+	@GetMapping
+	public List<InventoryResponse> getAll() {
+		return service.getAll();
+	}
+
+	@GetMapping("/{id}")
+	public InventoryResponse getById(@PathVariable Long id) {
+		return service.getById(id);
+	}
+
+	@GetMapping("/sku/{sku}")
+	public InventoryResponse getBySku(@PathVariable String sku) {
+		return service.getBySku(sku);
+	}
+
+	@GetMapping("/product/{productId}")
+	public InventoryResponse getByProductId(@PathVariable UUID productId) {
+		return service.getByProductId(productId);
+	}
+
+	@GetMapping("/low-stock")
+	public List<InventoryResponse> getLowStock(@RequestParam(defaultValue = "10") @Min(0) int threshold) {
+		return service.getLowStock(threshold);
+	}
+
+	@PutMapping("/{id}")
+	public InventoryResponse update(@PathVariable Long id, @Valid @RequestBody UpdateInventoryRequest request) {
+		return service.update(id, request);
+	}
+
+	@PatchMapping("/{id}/adjust-stock")
+	public InventoryResponse adjustStock(@PathVariable Long id, @Valid @RequestBody AdjustStockRequest request) {
+		return service.adjustStock(id, request);
+	}
+
+	@PostMapping("/{id}/reserve")
+	public InventoryResponse reserve(@PathVariable Long id, @Valid @RequestBody ReserveStockRequest request) {
+		return service.reserveStock(id, request);
+	}
+
+	@PostMapping("/{id}/release")
+	public InventoryResponse release(@PathVariable Long id, @Valid @RequestBody ReleaseStockRequest request) {
+		return service.releaseStock(id, request);
+	}
+
+	@PostMapping("/product/{productId}/reserve")
+	public InventoryResponse reserveByProductId(@PathVariable UUID productId, @Valid @RequestBody ReserveStockRequest request) {
+		return service.reserveStockByProductId(productId, request);
+	}
+
+	@PostMapping("/product/{productId}/release")
+	public InventoryResponse releaseByProductId(@PathVariable UUID productId, @Valid @RequestBody ReleaseStockRequest request) {
+		return service.releaseStockByProductId(productId, request);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
+	}
+}
