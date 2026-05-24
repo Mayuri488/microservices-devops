@@ -8,10 +8,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="api-gateway" />
-        <module name="discovery-service" />
+        <module name="config-server" />
         <module name="common-service" />
+        <module name="discovery-service" />
       </profile>
-      <profile name="Annotation profile for cart-order-service" enabled="true">
+      <profile name="Annotation profile for products-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -19,19 +20,10 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
         </processorPath>
         <module name="products-service" />
-        <module name="cart-order-service" />
-      </profile>
-      <profile name="Annotation profile for users-service" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
-        </processorPath>
         <module name="payment-service" />
         <module name="inventory-service" />
         <module name="users-service" />
+        <module name="cart-order-service" />
         <module name="notification-service" />
         <module name="ai-service" />
       </profile>
@@ -43,6 +35,7 @@
       <module name="api-gateway" options="-parameters" />
       <module name="cart-order-service" options="-parameters" />
       <module name="common-service" options="-parameters" />
+      <module name="config-server" options="-parameters" />
       <module name="discovery-service" options="-parameters" />
       <module name="inventory-service" options="-parameters" />
       <module name="notification-service" options="-parameters" />
