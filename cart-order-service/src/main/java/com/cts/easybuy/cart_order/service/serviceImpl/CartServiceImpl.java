@@ -1,5 +1,6 @@
 package com.cts.easybuy.cart_order.service.serviceImpl;
 
+
 import com.cts.easybuy.cart_order.client.ProductClient;
 import com.cts.easybuy.cart_order.dto.*;
 import com.cts.easybuy.cart_order.entity.Cart;
@@ -25,23 +26,33 @@ import java.util.UUID;
 public class CartServiceImpl implements CartService {
 
 	private final CartRepository cartRepository;
+
+	//product client helps us to get product from product service
 	private final ProductClient productClient;
 
+	// it inject the dependencies
 	public CartServiceImpl(CartRepository cartRepository, ProductClient productClient) {
 		this.cartRepository = cartRepository;
 		this.productClient = productClient;
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional
 	public CartResponse getCart(String userId) {
-		return toResponse(getOrCreateActiveCart(userId));
+
+		//if user cart is there in database it will fetch that cart
+		//if not then it will create a new cart and return that[empty]
+		Cart cart = getOrCreateActiveCart(userId);
+
+		return toResponse(cart);
 	}
 
 	@Override
 	public CartResponse addItem(String userId, AddCartItemRequest request) {
+		//fetch cart from database[user]
 		Cart cart = getOrCreateActiveCart(userId);
 		ProductSnapshot product = fetchProduct(request.productId());
+
 		CartItem item = cart.getItems().stream()
 				.filter(existing -> existing.getProductId().equals(request.productId()))
 				.findFirst()
@@ -49,6 +60,7 @@ public class CartServiceImpl implements CartService {
 					CartItem created = new CartItem();
 					created.setCart(cart);
 					created.setProductId(request.productId());
+					//created.setQuantity(request.quantity());
 					cart.getItems().add(created);
 					return created;
 				});
@@ -83,10 +95,14 @@ public class CartServiceImpl implements CartService {
 		cartRepository.save(cart);
 	}
 
+
 	private Cart getOrCreateActiveCart(String userId) {
+
 		if (!StringUtils.hasText(userId)) {
 			throw new BusinessRuleException("userId is required");
 		}
+
+
 		return cartRepository.findByUserIdAndStatus(normalizeUserId(userId), CartStatus.ACTIVE)
 				.orElseGet(() -> {
 					Cart cart = new Cart();
@@ -104,6 +120,7 @@ public class CartServiceImpl implements CartService {
 				.orElseThrow(() -> new ResourceNotFoundException("Cart item not found for productId: " + productId));
 	}
 
+	//inter service communication
 	private ProductSnapshot fetchProduct(UUID productId) {
 		try {
 			ProductSnapshot product = productClient.getProductById(productId);
@@ -146,6 +163,8 @@ public class CartServiceImpl implements CartService {
 		}
 	}
 
+
+	//base price pr: discount apply kar rahe hai.
 	private BigDecimal finalUnitPrice(Double price, Integer discount) {
 		BigDecimal base = BigDecimal.valueOf(price == null ? 0.0 : price);
 		BigDecimal discountFactor = BigDecimal.valueOf(100 - defaultZero(discount)).divide(BigDecimal.valueOf(100), 4, RoundingMode.HALF_UP);

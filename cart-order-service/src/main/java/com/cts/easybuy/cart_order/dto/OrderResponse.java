@@ -1,17 +1,23 @@
 package com.cts.easybuy.cart_order.dto;
 
+import com.cts.easybuy.cart_order.entity.OrderStatus;
+import com.cts.easybuy.cart_order.entity.PaymentMethod;
+import com.cts.easybuy.cart_order.entity.PaymentStatus;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
-import com.cts.easybuy.cart_order.entity.OrderStatus;
-
 public record OrderResponse(
 		Long id,
+		String billingName,
+		String billingPhone,
 		String orderNumber,
 		String userId,
 		String shippingAddress,
-		String paymentMethod,
+		PaymentStatus paymentStatus,
+		String extraInformation,
+		PaymentMethod paymentMethod,
 		OrderStatus status,
 		BigDecimal totalAmount,
 		List<OrderItemResponse> items,

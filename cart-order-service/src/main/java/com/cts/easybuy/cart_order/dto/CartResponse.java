@@ -1,10 +1,10 @@
 package com.cts.easybuy.cart_order.dto;
 
+import com.cts.easybuy.cart_order.entity.CartStatus;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
-
-import com.cts.easybuy.cart_order.entity.CartStatus;
 
 public record CartResponse(
 		Long id,
@@ -15,4 +15,7 @@ public record CartResponse(
 		Instant createdAt,
 		Instant updatedAt,
 		Instant checkedOutAt) {
+
+
+
 }
