@@ -1,10 +1,11 @@
 package com.cts.easybuy.inventory.service;
 
-import com.substring.easybuy.inventory.domain.InventoryItem;
-import com.substring.easybuy.inventory.dto.*;
-import com.substring.easybuy.inventory.exception.BusinessRuleException;
-import com.substring.easybuy.inventory.exception.ResourceNotFoundException;
-import com.substring.easybuy.inventory.repository.InventoryItemRepository;
+
+import com.cts.easybuy.inventory.domain.InventoryItem;
+import com.cts.easybuy.inventory.dto.*;
+import com.cts.easybuy.inventory.exception.BusinessRuleException;
+import com.cts.easybuy.inventory.exception.ResourceNotFoundException;
+import com.cts.easybuy.inventory.repository.InventoryItemRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;

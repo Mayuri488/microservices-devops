@@ -1,6 +1,7 @@
 package com.cts.easybuy.inventory.service;
 
-import com.substring.easybuy.inventory.dto.*;
+import com.cts.easybuy.inventory.dto.*;
+
 
 import java.util.List;
 import java.util.UUID;

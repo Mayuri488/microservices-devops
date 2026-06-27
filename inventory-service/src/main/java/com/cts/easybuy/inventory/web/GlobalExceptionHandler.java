@@ -1,7 +1,8 @@
 package com.cts.easybuy.inventory.web;
 
-import com.substring.easybuy.inventory.exception.BusinessRuleException;
-import com.substring.easybuy.inventory.exception.ResourceNotFoundException;
+
+import com.cts.easybuy.inventory.exception.BusinessRuleException;
+import com.cts.easybuy.inventory.exception.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;

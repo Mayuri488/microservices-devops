@@ -1,6 +1,6 @@
 package com.cts.easybuy.inventory.repository;
 
-import com.substring.easybuy.inventory.domain.InventoryItem;
+import com.cts.easybuy.inventory.domain.InventoryItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

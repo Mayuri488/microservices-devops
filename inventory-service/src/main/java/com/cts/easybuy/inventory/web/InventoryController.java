@@ -1,7 +1,7 @@
 package com.cts.easybuy.inventory.web;
 
-import com.substring.easybuy.inventory.dto.*;
-import com.substring.easybuy.inventory.service.InventoryService;
+import com.cts.easybuy.inventory.dto.*;
+import com.cts.easybuy.inventory.service.InventoryService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import org.springframework.http.HttpStatus;
