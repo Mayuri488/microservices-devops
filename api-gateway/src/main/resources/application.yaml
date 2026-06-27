@@ -1,14 +1,22 @@
 spring:
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 60000
+
+  config:
+    import: configserver:${CONFIG_SERVER_URL:http://localhost:8079}
   application:
     name: API-GATEWAY
   cloud:
     gateway:
       server:
         webflux:
-         discovery:
-           locator:
-             enabled: false
-             lower-case-service-id: true
+          discovery:
+            locator:
+              enabled: false
+              lower-case-service-id: true
 
 management:
   endpoints:
@@ -34,11 +42,10 @@ eureka:
   instance:
     preferIpAddress: true
 
-
-
-product:
-  service:
-    id: lb://PRODUCT-SERVICE
-cartorder:
-  service:
-    id: lb://CART-ORDER-SERVICE
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 10
+      permittedNumberOfCallsInHalfOpenState: 2
+      failureRateThreshold: 50
+      waitDurationInOpenState: 10000
